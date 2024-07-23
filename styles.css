@@ -1,5 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
     margin: 0;
     padding: 20px;
     background-color: #f4f4f4;
@@ -12,6 +12,10 @@ body {
 
 h1 {
     text-align: center;
+}
+
+button {
+    font-family: 'Inter', sans-serif;
 }
 
 table {
@@ -27,10 +31,15 @@ table, th, td {
 th, td {
     padding: 10px;
     text-align: center;
+    transition: border-color 0.3s;
 }
 
 td[contenteditable="true"] {
     background-color: #fff;
+}
+
+td:hover {
+    border-color: black;
 }
 
 .kanban-board {
@@ -44,6 +53,7 @@ td[contenteditable="true"] {
     width: 30%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
+    transition: border-color 0.3s;
 }
 
 .kanban-column h2 {
@@ -66,4 +76,9 @@ td[contenteditable="true"] {
     margin-bottom: 10px;
     border-radius: 4px;
     cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+.kanban-column:hover, .kanban-item:hover {
+    border-color: black;
 }

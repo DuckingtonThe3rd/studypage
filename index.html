@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Timetable & To-Do List</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -86,20 +87,22 @@
 
         <h1>To-Do List</h1>
         <div class="kanban-board">
-            <div class="kanban-column">
+            <div class="kanban-column" id="to-do-column">
                 <h2>To Do</h2>
                 <div class="kanban-items" id="to-do"></div>
                 <button onclick="addItem('to-do')">Add Item</button>
             </div>
-            <div class="kanban-column">
+            <div class="kanban-column" id="in-progress-column">
                 <h2>In Progress</h2>
                 <div class="kanban-items" id="in-progress"></div>
             </div>
-            <div class="kanban-column">
+            <div class="kanban-column" id="done-column">
                 <h2>Done</h2>
                 <div class="kanban-items" id="done"></div>
             </div>
         </div>
+
+        <button id="save-button">Save</button>
     </div>
 
     <script src="scripts.js"></script>
