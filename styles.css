@@ -39,7 +39,7 @@ td[contenteditable="true"] {
 }
 
 td:hover {
-    border-color: black;
+    border-color: rgb(85, 46, 255);
 }
 
 .kanban-board {
@@ -80,5 +80,5 @@ td:hover {
 }
 
 .kanban-column:hover, .kanban-item:hover {
-    border-color: black;
+    border-color: rgb(85, 46, 255);
 }

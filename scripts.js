@@ -56,16 +56,24 @@ function saveData() {
     const inProgressItems = Array.from(document.getElementById('in-progress').children).map(item => item.textContent);
     const doneItems = Array.from(document.getElementById('done').children).map(item => item.textContent);
 
+    const timetable = [];
+    const rows = document.querySelectorAll('#timetable tbody tr');
+    rows.forEach(row => {
+        const rowData = Array.from(row.children).map(cell => cell.textContent);
+        timetable.push(rowData);
+    });
+
     const data = {
         toDo: toDoItems,
         inProgress: inProgressItems,
-        done: doneItems
+        done: doneItems,
+        timetable: timetable
     };
 
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = 'kanban-data.txt';
+    a.download = 'data.txt';
     a.click();
 }
 
@@ -78,6 +86,7 @@ function loadData(event) {
             populateColumn('to-do', data.toDo);
             populateColumn('in-progress', data.inProgress);
             populateColumn('done', data.done);
+            populateTimetable(data.timetable);
         };
         reader.readAsText(file);
     }
@@ -97,5 +106,15 @@ function populateColumn(columnId, items) {
         newItem.addEventListener('dragover', handleDragOver);
         newItem.addEventListener('drop', handleDrop);
         column.appendChild(newItem);
+    });
+}
+
+function populateTimetable(timetable) {
+    const rows = document.querySelectorAll('#timetable tbody tr');
+    timetable.forEach((rowData, rowIndex) => {
+        const cells = rows[rowIndex].children;
+        rowData.forEach((cellData, cellIndex) => {
+            cells[cellIndex].textContent = cellData;
+        });
     });
 }
