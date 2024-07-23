@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('save-button').addEventListener('click', saveData);
-    loadData();
+    document.getElementById('upload').addEventListener('change', loadData);
 });
 
 function handleDragStart(e) {
@@ -51,7 +51,7 @@ function handleDrop(e) {
     e.dataTransfer.clearData();
 }
 
-async function saveData() {
+function saveData() {
     const toDoItems = Array.from(document.getElementById('to-do').children).map(item => item.textContent);
     const inProgressItems = Array.from(document.getElementById('in-progress').children).map(item => item.textContent);
     const doneItems = Array.from(document.getElementById('done').children).map(item => item.textContent);
@@ -62,21 +62,25 @@ async function saveData() {
         done: doneItems
     };
 
-    await fetch('/save', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    });
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'kanban-data.txt';
+    a.click();
 }
 
-async function loadData() {
-    const response = await fetch('/load');
-    const data = await response.json();
-    populateColumn('to-do', data.toDo);
-    populateColumn('in-progress', data.inProgress);
-    populateColumn('done', data.done);
+function loadData(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const data = JSON.parse(e.target.result);
+            populateColumn('to-do', data.toDo);
+            populateColumn('in-progress', data.inProgress);
+            populateColumn('done', data.done);
+        };
+        reader.readAsText(file);
+    }
 }
 
 function populateColumn(columnId, items) {
